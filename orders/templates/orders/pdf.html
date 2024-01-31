@@ -1,0 +1,92 @@
+﻿<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Заказ</title>
+</head>
+<style>
+    table {
+        width: 100%;
+        border-spacing: 0;
+        border-collapse: collapse;
+        margin: 20px 0;
+    }
+
+    table th, table td {
+        text-align: left;
+        font-size: 14px;
+        padding: 10px;
+        margin: 0;
+    }
+
+    tbody tr:nth-child(odd) {
+        background: #efefef;
+    }
+
+    thead th, tbody tr.total {
+        background: #0d6efd;
+        color: #fff;
+        font-weight: bold;
+    }
+
+    .div-status {
+        text-align: center;
+    }
+
+    .status {
+        color: #3d86e7;
+        text-transform: uppercase;
+        font-weight: bold;
+        font-size: 30px;
+    }
+
+</style>
+<body>
+<h1>Мир цветов</h1>
+<p>
+    Заказ №{{ order.id }}
+    <br>
+    <span class="secondary">
+      {{ order.created_at|date:"M d, Y" }}
+    </span>
+</p>
+
+<h3>От</h3>
+<p>
+    {{ order.user.first_name }} {{ order.user.last_name }}<br>
+    {{ order.user.email }}<br>
+    {{ order.address }}<br>
+    {{ order.postal_code }}, {{ order.city }}
+</p>
+
+<h3>Продукты</h3>
+<table>
+    <thead>
+    <tr>
+        <th>Название</th>
+        <th>Цена за шт</th>
+        <th>Количество</th>
+        <th>Общая стоимость</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for item in order.items.all %}
+        <tr class="row{% cycle "1" "2" %}">
+            <td>{{ item.product.name }}</td>
+            <td class="num">{{ item.price }}Р</td>
+            <td class="num">{{ item.quantity }}</td>
+            <td class="num">{{ item.get_cost }}Р</td>
+        </tr>
+    {% endfor %}
+    <tr class="total">
+        <td colspan="3">Всего</td>
+        <td class="num">${{ order.get_total_cost }}</td>
+    </tr>
+    </tbody>
+</table>
+
+<div class="div-status">
+    <span class="status">{{ order.status }}</span>
+</div>
+</body>
+</html>

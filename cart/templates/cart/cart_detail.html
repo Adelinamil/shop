@@ -1,0 +1,63 @@
+{% extends 'shop/base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <div class="container mt-5">
+        <table class="table table-borderless table-hover">
+            <thead class="bg-primary bg-gradient text-white">
+            <tr>
+                <th scope="col">Изображение</th>
+                <th scope="col">Название</th>
+                <th scope="col">Количество</th>
+                <th scope="col">Цена за шт</th>
+                <th scope="col">Общая цена</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in cart_items %}
+                <tr class="bg-light">
+                    <td>
+                        {% csrf_token %}
+                        <a href="{% url 'shop:product_detail' item.product.slug %}" target="_blank">
+                            {% if item.product.image %}
+                                <img src="{{ item.product.image.url }}" width="160" height="140" alt="Картинка">
+                            {% else %}
+                                <img src="{% static 'shop/img/no_image.png' %}" width="160" height="140" alt="Картинка">
+                            {% endif %}
+                        </a>
+                    </td>
+                    <td>{{ item.product.name }}</td>
+                    <td>
+                        <form>
+                            {% csrf_token %}
+                            <div class="btn-group btn-group-sm" role="group">
+                                <button type="button" class="btn btn-outline-primary">{{ item.quantity }}</button>
+                                <button type="button" class="btn btn-outline-primary"><i
+                                        class="fas fa-plus" onclick="onAddToCart({{ item.product.id }})"></i>
+                                </button>
+                                <button type="button" class="btn btn-outline-primary"
+                                        onclick="removeFromCart({{ item.product.id }})"><i class="fas fa-minus"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </td>
+                    <td>{{ item.product.price }}</td>
+                    <td>{{ item.total_price }}Р</td>
+                </tr>
+            {% endfor %}
+            <tr class="bg-primary bg-gradient text-white">
+                <th>Total</th>
+                <th colspan="3"></th>
+                <td>{{ total_price }}Р</td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="text-end">
+            <div class="btn-group" role="group">
+                <a href="{% url 'shop:products_by_page' 1 %}" class="btn btn-outline-secondary">Продолжить</a>
+                <a href="{% url 'orders:create_order' %}" class="btn btn-outline-primary">Создать заказ</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

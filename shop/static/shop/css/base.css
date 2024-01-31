@@ -1,0 +1,73 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1;
+}
+
+footer {
+    margin-top: auto;
+}
+
+.logo-image {
+    height: 60px !important;
+}
+
+.product img {
+    width: 18rem;
+    height: 17rem;
+}
+
+.product {
+    width: 18rem;
+}
+
+.detail-product-image {
+    width: 300px;
+}
+
+.order-pdf {
+    transition: all .1s;
+}
+
+.order-pdf:hover {
+    font-size: 18px;
+    text-decoration: none;
+}
+
+@media (max-width: 1400px) {
+    .product {
+        width: 16rem;
+    }
+
+    .product img {
+        width: 16rem;
+        height: 15rem;
+    }
+}
+
+@media (max-width: 1200px) {
+    .product {
+        width: 15rem;
+    }
+
+    .product img {
+        width: 15rem;
+        height: 14rem;
+    }
+}
+
+@media (max-width: 1000px) {
+    .product {
+        width: 17rem;
+    }
+
+    .product img {
+        width: 17rem;
+        height: 16rem;
+    }
+}
